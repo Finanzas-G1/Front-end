@@ -1,14 +1,35 @@
-// login.service.ts
-import {Injectable} from '@angular/core';
-import {AuthRepository} from '../infrastructure/auth.repository';
-import {Observable} from 'rxjs';
-import {User} from '../domain/user.entity';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class LoginService {
-  constructor(private authRepo: AuthRepository) {}
+  private apiUrl = 'http://localhost:3000/users';  // Usar json-server para las solicitudes
 
-  login(email: string, password: string): Observable<User> {
-    return this.authRepo.login(email, password);
+  constructor(private http: HttpClient) {
+  }
+
+  login(username: string, password: string): Observable<any> {
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      map((data) => {
+        const user = data.find(
+          (user: any) => user.username === username && user.password === password
+        );
+        if (user) {
+          console.log('Usuario encontrado:', user);  // Verificar que se encontró el usuario
+          return {success: true, user};
+        } else {
+          console.error('Credenciales incorrectas');  // Log de error en caso de credenciales incorrectas
+          return {success: false, message: 'Credenciales incorrectas'};
+        }
+      }),
+      catchError((error) => {
+        console.error('Error al realizar la solicitud:', error);  // Log para errores de solicitud
+        return of({success: false, message: 'Error al realizar la solicitud'});
+      })
+    );
   }
 }

@@ -1,0 +1,73 @@
+/* inicio.component.css */
+.inicio-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  background: linear-gradient(90deg, #FF8C00, #FF6A00);
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.left {
+  width: 60%;
+  padding-right: 20px;
+}
+
+.left p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.right {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.icon-box {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.icon-box img {
+  width: 50px;
+  height: 50px;
+}
+
+.icon-box p {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.footer {
+  background-color: #f1f1f1;
+  text-align: center;
+  padding: 10px;
+}
+
+footer p {
+  font-size: 0.9rem;
+  color: #777;
+}

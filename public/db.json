@@ -5,7 +5,21 @@
       "email": "svsilvat@hotmail.com",
       "password": "123",
       "confirmPassword": "123",
-      "id": 1
+      "id": "1"
+    },
+    {
+      "id": "e1f3",
+      "username": "Sergio",
+      "email": "crgio_@hotmail.com",
+      "password": "12345",
+      "confirmPassword": "12345"
+    },
+    {
+      "id": "4799",
+      "username": "Rodri",
+      "email": "rodri@upc.com",
+      "password": "1234",
+      "confirmPassword": "1234"
     }
   ]
 }
