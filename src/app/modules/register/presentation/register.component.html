@@ -1,0 +1,32 @@
+<div class="register-box">
+  <h2>Registro</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input type="text" formControlName="username" placeholder="Nombre de usuario" />
+    <div class="error" *ngIf="form.get('username')?.touched && form.get('username')?.invalid">
+      El nombre de usuario es obligatorio
+    </div>
+
+    <input type="email" formControlName="email" placeholder="Email" />
+    <div class="error" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+      Ingresa un email válido
+    </div>
+
+    <input type="password" formControlName="password" placeholder="Contraseña" />
+    <div class="error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+      La contraseña es obligatoria
+    </div>
+
+    <input type="password" formControlName="confirmPassword" placeholder="Repetir contraseña" />
+    <div class="error" *ngIf="form.get('confirmPassword')?.touched && form.get('confirmPassword')?.invalid">
+      Debes repetir la contraseña
+    </div>
+    <div class="error" *ngIf="form.get('confirmPassword')?.touched && form.value.password !== form.value.confirmPassword">
+      Las contraseñas no coinciden
+    </div>
+
+    <button type="submit" [disabled]="form.invalid || form.value.password !== form.value.confirmPassword">
+      REGISTRAR
+    </button>
+  </form>
+  <a routerLink="/login">¿Ya tienes una cuenta? Inicia sesión aquí</a>
+</div>
