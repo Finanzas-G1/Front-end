@@ -1,7 +1,7 @@
 <div class="register-box">
   <h2>Registro</h2>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <input type="text" formControlName="username" placeholder="Nombre de usuario" />
+    <input type="text" formControlName="username" placeholder="Nombre de usuario 😎" />
     <div class="error" *ngIf="form.get('username')?.touched && form.get('username')?.invalid">
       El nombre de usuario es obligatorio
     </div>
