@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import {NgOptimizedImage} from '@angular/common'; // Ahora debería encontrar el servicio correctamente
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-inicio',
@@ -18,7 +18,7 @@ export class InicioComponent implements OnInit {
   ngOnInit(): void {
     const user = this.authService.getUser();
     if (user) {
-      this.username = user.username;  // Asigna el nombre de usuario autenticado
+      this.username = user.username;
     }
   }
 }

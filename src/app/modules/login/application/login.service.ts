@@ -7,7 +7,7 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class LoginService {
-  private apiUrl = 'http://localhost:3000/users';  // Usar json-server para las solicitudes
+  private apiUrl = 'http://localhost:3000/users';
 
   constructor(private http: HttpClient) {
   }
@@ -19,15 +19,15 @@ export class LoginService {
           (user: any) => user.username === username && user.password === password
         );
         if (user) {
-          console.log('Usuario encontrado:', user);  // Verificar que se encontró el usuario
+          console.log('Usuario encontrado:', user);
           return {success: true, user};
         } else {
-          console.error('Credenciales incorrectas');  // Log de error en caso de credenciales incorrectas
+          console.error('Credenciales incorrectas');
           return {success: false, message: 'Credenciales incorrectas'};
         }
       }),
       catchError((error) => {
-        console.error('Error al realizar la solicitud:', error);  // Log para errores de solicitud
+        console.error('Error al realizar la solicitud:', error);
         return of({success: false, message: 'Error al realizar la solicitud'});
       })
     );

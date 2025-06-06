@@ -5,16 +5,16 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private userSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null); // Inicialmente null
-  public user = this.userSubject.asObservable(); // Observable para suscribirse a cambios de usuario
+  private userSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public user = this.userSubject.asObservable();
 
   constructor() { }
 
   setUser(user: any) {
-    this.userSubject.next(user);  // Almacena al usuario autenticado
+    this.userSubject.next(user);
   }
 
   getUser() {
-    return this.userSubject.value;  // Obtiene el usuario actual
+    return this.userSubject.value;
   }
 }

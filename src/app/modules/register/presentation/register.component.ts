@@ -11,7 +11,6 @@ import {CommonModule} from '@angular/common';
     ReactiveFormsModule,
     CommonModule,
     RouterLink,
-    // 👈 AÑADIR ESTO
   ],
   styleUrls: ['./register.component.css']
 })
@@ -32,7 +31,7 @@ export class RegisterComponent {
       this.http.post('http://localhost:3000/users', this.form.value).subscribe(() => {
         alert('Usuario registrado con éxito');
         this.form.reset();
-        this.router.navigate(['/login']); // 👈 Redirección al login
+        this.router.navigate(['/login']);
       });
     } else {
       alert('Verifica los campos del formulario');
