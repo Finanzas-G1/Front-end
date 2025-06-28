@@ -17,4 +17,8 @@ export class AuthService {
   getUser() {
     return this.userSubject.value;
   }
+  // Método para cerrar sesión
+  logout() {
+    localStorage.removeItem('user');  // Elimina los datos del usuario del almacenamiento local
+  }
 }

@@ -1,8 +1,9 @@
 /* inicio.component.css */
+
 .inicio-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100vh;  /* Ocupa toda la altura de la pantalla */
   font-family: Arial, sans-serif;
 }
 
@@ -11,6 +12,7 @@
   color: white;
   text-align: center;
   padding: 20px;
+  flex-shrink: 0; /* Asegura que el header no se reduzca */
 }
 
 h1 {
@@ -20,14 +22,20 @@ h1 {
 
 .content {
   display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  flex-grow: 1;
+  justify-content: center;
+  width: 100%;
+  gap: 40px;
+  margin-top: 20px;
+  flex-grow: 1; /* Hace que el contenido ocupe el espacio disponible */
 }
 
 .left {
-  width: 60%;
-  padding-right: 20px;
+  width: 60%; /* Limita el ancho del texto y dashboard */
+}
+
+.text-container {
+  max-width: 800px;  /* Limita el ancho máximo del texto */
+  margin-bottom: 40px;  /* Espacio entre el texto y el dashboard */
 }
 
 .left p {
@@ -39,16 +47,24 @@ h1 {
   width: 35%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center; /* Asegura que los íconos estén centrados verticalmente */
+  align-items: center; /* Centra los íconos horizontalmente */
+  gap: 20px;  /* Espacio entre los iconos */
 }
 
 .icon-box {
   background-color: #f9f9f9;
   border-radius: 10px;
   padding: 15px;
-  margin-bottom: 20px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Asegura que el icono ocupe todo el ancho disponible */
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.icon-box:hover {
+  transform: scale(1.05); /* Aumenta el tamaño al pasar el mouse */
 }
 
 .icon-box img {
@@ -65,9 +81,8 @@ h1 {
   background-color: #f1f1f1;
   text-align: center;
   padding: 10px;
-}
-
-footer p {
   font-size: 0.9rem;
   color: #777;
+  flex-shrink: 0; /* No permite que el footer se desplace */
+  margin-top: auto; /* Empuja el footer hacia abajo */
 }

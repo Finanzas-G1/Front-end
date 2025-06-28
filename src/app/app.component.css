@@ -1,7 +1,28 @@
-
 /* app.component.css */
 :host {
   display: block;
-  padding: 1rem;
+  height: 100%; /* Aseguramos que el componente ocupe toda la altura de la pantalla */
   font-family: Arial, sans-serif;
+  margin: 0; /* Elimina márgenes por defecto */
+}
+
+/* Si necesitas un padding, puedes usarlo en elementos internos */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px; /* Ajustamos el padding, si es necesario */
+  justify-content: space-between; /* Si tienes header, main y footer, los distribuye */
+}
+
+main {
+  flex: 1; /* Hace que el contenido ocupe el espacio restante */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
 }

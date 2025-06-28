@@ -1,0 +1,66 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Registrar Nueva Valoración de Bono</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre del Bono</mat-label>
+        <input matInput [(ngModel)]="bondForm.nombre" name="nombre" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Tasa</mat-label>
+        <input matInput type="number" [(ngModel)]="bondForm.tasa" name="tasa" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Plazo (años)</mat-label>
+        <input matInput type="number" [(ngModel)]="bondForm.plazo" name="plazo" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Monto</mat-label>
+        <input matInput type="number" [(ngModel)]="bondForm.monto" name="monto" required>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Registrar</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Valoraciones de Bonos</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-table [dataSource]="valoraciones">
+      <!-- Columna: Nombre -->
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let bond">{{ bond.nombre }}</mat-cell>
+      </ng-container>
+
+      <!-- Columna: Tasa -->
+      <ng-container matColumnDef="tasa">
+        <mat-header-cell *matHeaderCellDef> Tasa </mat-header-cell>
+        <mat-cell *matCellDef="let bond">{{ bond.tasa }}%</mat-cell>
+      </ng-container>
+
+      <!-- Columna: Plazo -->
+      <ng-container matColumnDef="plazo">
+        <mat-header-cell *matHeaderCellDef> Plazo (años) </mat-header-cell>
+        <mat-cell *matCellDef="let bond">{{ bond.plazo }}</mat-cell>
+      </ng-container>
+
+      <!-- Columna: Monto -->
+      <ng-container matColumnDef="monto">
+        <mat-header-cell *matHeaderCellDef> Monto </mat-header-cell>
+        <mat-cell *matCellDef="let bond">{{ bond.monto | currency }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </mat-card-content>
+</mat-card>

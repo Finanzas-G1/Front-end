@@ -1,0 +1,77 @@
+<mat-card class="card-header">
+  <div class="header">
+    <h1>Valoraciones de Bonos</h1>
+  </div>
+  <mat-card-header>
+    <mat-card-title>Registrar Nueva Valoración de Bono</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form (ngSubmit)="onSubmit()" #bondForm="ngForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre del Bono</mat-label>
+        <input matInput [(ngModel)]="bondFormData.nombre" name="nombre" required #nombre="ngModel">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Tasa</mat-label>
+        <input matInput type="number" [(ngModel)]="bondFormData.tasa" name="tasa" required #tasa="ngModel">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Plazo (años)</mat-label>
+        <input matInput type="number" [(ngModel)]="bondFormData.plazo" name="plazo" required #plazo="ngModel">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Monto</mat-label>
+        <input matInput type="number" [(ngModel)]="bondFormData.monto" name="monto" required #monto="ngModel">
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!bondForm.valid">Registrar</button>
+        <button mat-button (click)="navigateToHome()">Volver a Home</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="valoraciones-card">
+  <mat-card-header>
+    <mat-card-title>Bonos:</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-table [dataSource]="valoraciones">
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let bond">{{ bond.nombre }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="tasa">
+        <mat-header-cell *matHeaderCellDef> Tasa </mat-header-cell>
+        <mat-cell *matCellDef="let bond">{{ bond.tasa }}%</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="plazo">
+        <mat-header-cell *matHeaderCellDef> Plazo (años) </mat-header-cell>
+        <mat-cell *matCellDef="let bond">{{ bond.plazo }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="monto">
+        <mat-header-cell *matHeaderCellDef> Monto </mat-header-cell>
+        <mat-cell *matCellDef="let bond">{{ bond.monto | currency }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let bond">
+          <button mat-icon-button color="warn" (click)="deleteBond(bond.id)">
+            <mat-icon>X</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </mat-card-content>
+</mat-card>
