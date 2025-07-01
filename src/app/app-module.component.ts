@@ -20,7 +20,20 @@ import { MatButtonModule } from '@angular/material/button';
     AppComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, RouterModule, LoginModule, HttpClientModule, LoginComponent, RegisterComponent, FormsModule, MatTableModule, MatFormFieldModule, MatInputModule, MatButtonModule, DashboardComponent, BondsComponent
+    BrowserModule,
+    AppRoutingModule,
+    RouterModule,
+    LoginModule,
+    HttpClientModule,
+    LoginComponent,
+    RegisterComponent,
+    FormsModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    DashboardComponent,
+    BondsComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

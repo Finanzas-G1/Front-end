@@ -1,5 +1,3 @@
-/* bonds.component.css */
-
 /* Estilos para las tarjetas */
 mat-card {
   margin-bottom: 20px;
@@ -9,6 +7,10 @@ mat-card {
 
 mat-form-field {
   width: 100%;
+}
+
+mat-grid-list {
+  margin-bottom: 20px; /* Espacio entre el formulario y los botones */
 }
 
 /* Estilo para el botón de retroceso */
@@ -29,6 +31,13 @@ button[mat-raised-button] {
 
 button[mat-raised-button]:disabled {
   background-color: #ccc;
+}
+
+/* Estilos para los botones en general */
+.actions {
+  display: flex;
+  justify-content: space-between; /* Espaciado entre los botones */
+  gap: 10px;  /* Espacio adicional entre los botones */
 }
 
 /* Estilos para la tabla */

@@ -15,7 +15,8 @@ import {
 } from '@angular/material/table';
 import {CurrencyPipe} from '@angular/common';
 import {MatIcon} from '@angular/material/icon'; // Asegúrate de importar el servicio correctamente
-import { Router } from '@angular/router'; // Importar Router para navegación
+import { Router } from '@angular/router';
+import {MatGridList, MatGridTile} from '@angular/material/grid-list'; // Importar Router para navegación
 
 @Component({
   selector: 'app-bonds',
@@ -44,7 +45,9 @@ import { Router } from '@angular/router'; // Importar Router para navegación
     MatHeaderRowDef,
     MatRowDef,
     MatIcon,
-    MatIconButton
+    MatIconButton,
+    MatGridTile,
+    MatGridList
   ],
   styleUrls: ['./bonds.component.css']
 })
@@ -59,14 +62,23 @@ export class BondsComponent implements OnInit {
   valoraciones: any[] = [];
   displayedColumns: string[] = ['nombre', 'tasa', 'plazo', 'monto', 'acciones'];
 
+  // Suponemos que el usuario logueado tiene el ID '1' (esto debería obtenerse dinámicamente en una aplicación real)
+  usuarioId: string = localStorage.getItem('usuarioId') || '';  // Obtener usuarioId desde localStorage
+
   constructor(private bondsService: BondsService, private router: Router) {}
 
   ngOnInit(): void {
-    this.loadBonds();
+    if (this.usuarioId) {
+      this.loadBonds();
+    } else {
+      console.log('Usuario no autenticado');
+      this.router.navigate(['/login']);  // Redirigir si no hay un usuario logueado
+    }
   }
 
   loadBonds() {
-    this.bondsService.getBonds().subscribe(response => {
+    // Obtener los bonos filtrados por usuarioId
+    this.bondsService.getBondsByUser(this.usuarioId).subscribe(response => {
       this.valoraciones = response;
     });
   }
@@ -76,7 +88,7 @@ export class BondsComponent implements OnInit {
     if (this.bondFormData.nombre && this.bondFormData.tasa && this.bondFormData.plazo && this.bondFormData.monto) {
       const newBond = {
         ...this.bondFormData,
-        usuarioId: '1'  // Suponiendo que el ID del usuario es 1
+        usuarioId: this.usuarioId  // Asignamos el usuarioId actual
       };
 
       this.bondsService.addBond(newBond).subscribe(response => {

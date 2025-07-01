@@ -16,9 +16,9 @@ export class BondsService {
     return this.http.post(this.apiUrl, bond);
   }
 
-  // Método para obtener los bonos
-  getBonds(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  // bonds.service.ts
+  getBondsByUser(usuarioId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}?usuarioId=${usuarioId}`);
   }
 
   // Método para eliminar un bono
@@ -26,3 +26,4 @@ export class BondsService {
     return this.http.delete<void>(`${this.apiUrl}/${bondId}`);
   }
 }
+

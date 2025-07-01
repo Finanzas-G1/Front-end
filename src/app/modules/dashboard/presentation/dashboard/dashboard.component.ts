@@ -1,72 +1,70 @@
-import { Component } from '@angular/core';
-import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
-import {CurrencyPipe} from '@angular/common';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {FormsModule} from '@angular/forms';
-import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell, MatHeaderCellDef,
-  MatHeaderRow, MatHeaderRowDef,
-  MatRow, MatRowDef,
-  MatTable
-} from '@angular/material/table';
-import {MatButton} from '@angular/material/button';
+import { Component, OnInit } from '@angular/core';
+import { BondsService } from '../../../bonds/presentation/services/bonds.service';
+import { Router } from '@angular/router';
+import { CurrencyPipe, PercentPipe } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';  // Importar ScaleType
+import { Color } from '@swimlane/ngx-charts';  // Asegúrate de importar el tipo Color
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css'],
+  standalone: true,
   imports: [
-    MatCardHeader,
-    MatCard,
+    MatIcon,
+    PercentPipe,
+    CurrencyPipe,
+    MatButton,
     MatCardContent,
     MatCardTitle,
-    MatFormField,
-    CurrencyPipe,
-    MatLabel,
-    FormsModule,
-    MatHeaderCell,
-    MatCell,
-    MatTable,
-    MatRow,
-    MatHeaderRow,
-    MatColumnDef,
-    MatButton,
-    MatInput,
-    MatCellDef,
-    MatRowDef,
-    MatHeaderRowDef,
-    MatHeaderCellDef
-  ],
-  styleUrls: ['./dashboard.component.css']
+    MatCardHeader,
+    NgxChartsModule,
+    MatCard
+  ]
 })
-export class DashboardComponent {
-  // Formulario para el nuevo bono
-  bondForm = {
-    nombre: '',
-    tasa: 0,
-    plazo: 0,
-    monto: 0
+export class DashboardComponent implements OnInit {
+  totalBonos: number = 0;
+  promedioTasa: number = 0;
+  totalMonto: number = 0;
+  graficoTasas: any[] = []; // Datos para el gráfico
+
+  // Aquí definimos el colorScheme correctamente como un tipo 'Color'
+  colorScheme: Color = {
+    name: 'coolcolors',  // Nombre del esquema de colores
+    selectable: true,     // Si el esquema es seleccionable
+    group: ScaleType.Ordinal,  // Usar ScaleType.Ordinal
+    domain: ['#FF6A00', '#FF8C00', '#FF9E00']  // Los colores de las barras
   };
 
-  // Lista de valoraciones de bonos registradas
-  valoraciones = [
-    { nombre: 'Bono A', tasa: 7.5, plazo: 5, monto: 1000 },
-    { nombre: 'Bono B', tasa: 8.0, plazo: 10, monto: 2000 },
-  ];
+  constructor(private bondsService: BondsService, private router: Router) {}
 
-  // Definición de las columnas que se mostrarán en la tabla
-  displayedColumns: string[] = ['nombre', 'tasa', 'plazo', 'monto'];
+  ngOnInit(): void {
+    this.loadDashboardData();
+  }
 
-  // Método para agregar nueva valoración
-  onSubmit() {
-    if (this.bondForm.nombre && this.bondForm.tasa && this.bondForm.plazo && this.bondForm.monto) {
-      // Agregar la nueva valoración a la lista de valoraciones
-      this.valoraciones.push({ ...this.bondForm });
+  loadDashboardData() {
+    const usuarioId = localStorage.getItem('usuarioId') || '';
+    this.bondsService.getBondsByUser(usuarioId).subscribe((bonos: any[]) => {
+      this.totalBonos = bonos.length;
+      this.totalMonto = bonos.reduce((acc, bond) => acc + bond.monto, 0);
+      this.promedioTasa = bonos.reduce((acc, bond) => acc + bond.tasa, 0) / this.totalBonos;
 
-      // Limpiar el formulario
-      this.bondForm = { nombre: '', tasa: 0, plazo: 0, monto: 0 };
-    }
+      // Preparar los datos para el gráfico de barras
+      this.graficoTasas = bonos.map((bond) => ({
+        name: bond.nombre,
+        value: bond.tasa
+      }));
+    });
+  }
+
+  navigateToBonds() {
+    this.router.navigate(['/bonds']);
+  }
+
+  navigateToResults() {
+    this.router.navigate(['/results']);
   }
 }

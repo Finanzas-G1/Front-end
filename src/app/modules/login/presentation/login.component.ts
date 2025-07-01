@@ -33,6 +33,8 @@ export class LoginComponent {
       (response: any) => {
         if (response.success) {
           console.log('Usuario autenticado:', response.user);
+          // Aquí guardamos el usuarioId en localStorage
+          localStorage.setItem('usuarioId', response.user.id);  // Guardamos el usuarioId en localStorage
           this.authService.setUser(response.user);
           this.router.navigate(['/inicio']).then(() => {
             console.log('Redirigido al inicio');

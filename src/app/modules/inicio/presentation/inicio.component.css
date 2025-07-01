@@ -58,7 +58,7 @@ h1 {
   padding: 15px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%; /* Asegura que el icono ocupe todo el ancho disponible */
+  width: 50%; /* Ocupa todo el ancho disponible, pero en una columna esto hará que se vea más compacto */
   cursor: pointer;
   transition: transform 0.3s ease;
 }
@@ -85,4 +85,24 @@ h1 {
   color: #777;
   flex-shrink: 0; /* No permite que el footer se desplace */
   margin-top: auto; /* Empuja el footer hacia abajo */
+}
+
+button {
+  background-color: #d32f2f; /* Rojo oscuro */
+  color: white; /* Texto blanco */
+  font-size: 1.2rem; /* Aumenta el tamaño del texto */
+  padding: 12px 20px; /* Espaciado dentro del botón */
+  border: none; /* Elimina bordes */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Efecto suave al pasar el mouse */
+}
+
+button:hover {
+  background-color: #b71c1c; /* Rojo más oscuro al pasar el mouse */
+  transform: scale(1.05); /* Ligera animación de aumento */
+}
+
+button:focus {
+  outline: none; /* Elimina el borde del enfoque */
 }
