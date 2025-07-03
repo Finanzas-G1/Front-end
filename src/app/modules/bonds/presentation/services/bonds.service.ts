@@ -26,4 +26,3 @@ export class BondsService {
     return this.http.delete<void>(`${this.apiUrl}/${bondId}`);
   }
 }
-
