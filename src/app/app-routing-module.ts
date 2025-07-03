@@ -5,7 +5,7 @@ import { RegisterComponent } from './modules/register/presentation/register.comp
 import { InicioComponent } from './modules/inicio/presentation/inicio.component';
 import { DashboardComponent } from './modules/dashboard/presentation/dashboard/dashboard.component';
 import { BondsComponent } from './modules/bonds/presentation/bonds/bonds.component';
-
+import { ResultsComponent } from './modules/results/presentation/results.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'bonds', component: BondsComponent },
   //{ path: 'config', component: ConfigComponent },
-  //{ path: 'results', component: ResultsComponent },
+  { path: 'results/:id', component: ResultsComponent },
 ];
 
 @NgModule({

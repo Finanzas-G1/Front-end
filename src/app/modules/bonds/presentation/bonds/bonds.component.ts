@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BondsService } from '../services/bonds.service';
-import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
-import {FormsModule} from '@angular/forms';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
+import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import {
   MatCell, MatCellDef,
   MatColumnDef,
@@ -13,10 +13,11 @@ import {
   MatRow, MatRowDef,
   MatTable
 } from '@angular/material/table';
-import {CurrencyPipe} from '@angular/common';
-import {MatIcon} from '@angular/material/icon'; // Asegúrate de importar el servicio correctamente
+import { CurrencyPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import {MatGridList, MatGridTile} from '@angular/material/grid-list'; // Importar Router para navegación
+import { MatGridList, MatGridTile } from '@angular/material/grid-list';
+import { Bond } from '../bonds/bond.model'; // Importar la interfaz Bond
 
 @Component({
   selector: 'app-bonds',
@@ -28,9 +29,7 @@ import {MatGridList, MatGridTile} from '@angular/material/grid-list'; // Importa
     MatCardContent,
     FormsModule,
     MatFormField,
-    MatFormField,
     MatInput,
-    MatFormField,
     MatLabel,
     MatButton,
     MatTable,
@@ -59,11 +58,9 @@ export class BondsComponent implements OnInit {
     monto: 0
   };
 
-  valoraciones: any[] = [];
+  valoraciones: Bond[] = []; // Usar tipo Bond[]
   displayedColumns: string[] = ['nombre', 'tasa', 'plazo', 'monto', 'acciones'];
-
-  // Suponemos que el usuario logueado tiene el ID '1' (esto debería obtenerse dinámicamente en una aplicación real)
-  usuarioId: string = localStorage.getItem('usuarioId') || '';  // Obtener usuarioId desde localStorage
+  usuarioId: string = localStorage.getItem('usuarioId') || '';
 
   constructor(private bondsService: BondsService, private router: Router) {}
 
@@ -72,42 +69,55 @@ export class BondsComponent implements OnInit {
       this.loadBonds();
     } else {
       console.log('Usuario no autenticado');
-      this.router.navigate(['/login']);  // Redirigir si no hay un usuario logueado
+      this.router.navigate(['/login']);
     }
   }
 
   loadBonds() {
-    // Obtener los bonos filtrados por usuarioId
-    this.bondsService.getBondsByUser(this.usuarioId).subscribe(response => {
-      this.valoraciones = response;
+    this.bondsService.getBondsByUser(this.usuarioId).subscribe({
+      next: (response: Bond[]) => {
+        this.valoraciones = response;
+      },
+      error: (err) => console.error('Error loading bonds:', err)
     });
   }
 
-  // Método para agregar un bono
   onSubmit() {
     if (this.bondFormData.nombre && this.bondFormData.tasa && this.bondFormData.plazo && this.bondFormData.monto) {
-      const newBond = {
-        ...this.bondFormData,
-        usuarioId: this.usuarioId  // Asignamos el usuarioId actual
+      const newBond: Bond = {
+        nombre: this.bondFormData.nombre,
+        tasa: this.bondFormData.tasa,
+        plazo: this.bondFormData.plazo,
+        monto: this.bondFormData.monto,
+        usuarioId: this.usuarioId,
+        id: '' // El id será generado por el servidor
       };
 
-      this.bondsService.addBond(newBond).subscribe(response => {
-        console.log('Bono agregado:', response);
-        this.loadBonds();  // Recargar la lista de bonos después de agregar uno nuevo
-        this.bondFormData = { nombre: '', tasa: 0, plazo: 0, monto: 0 };  // Limpiar el formulario
+      this.bondsService.addBond(newBond).subscribe({
+        next: (response: Bond) => {
+          console.log('Bono agregado:', response);
+          this.loadBonds();
+          this.bondFormData = { nombre: '', tasa: 0, plazo: 0, monto: 0 };
+        },
+        error: (err) => console.error('Error adding bond:', err)
       });
     }
   }
 
-  // Método para navegar a la página de Home
   navigateToHome(): void {
     this.router.navigate(['/inicio']);
   }
 
-  // Método para eliminar una valoración de bono
+  navigateToResults(bondId: string): void {
+    this.router.navigate(['/results', bondId]);
+  }
+
   deleteBond(bondId: string) {
-    this.bondsService.deleteBond(bondId).subscribe(() => {
-      this.valoraciones = this.valoraciones.filter(bond => bond.id !== bondId);
+    this.bondsService.deleteBond(bondId).subscribe({
+      next: () => {
+        this.valoraciones = this.valoraciones.filter(bond => bond.id !== bondId);
+      },
+      error: (err) => console.error('Error deleting bond:', err)
     });
   }
 }
