@@ -51,27 +51,23 @@
     <mat-card-title>Bonos:</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-table>
+    <mat-table [dataSource]="valoraciones">
       <ng-container matColumnDef="nombre">
         <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
         <mat-cell *matCellDef="let bond">{{ bond.nombre }}</mat-cell>
       </ng-container>
-
       <ng-container matColumnDef="tasa">
         <mat-header-cell *matHeaderCellDef> Tasa </mat-header-cell>
         <mat-cell *matCellDef="let bond">{{ bond.tasa }}%</mat-cell>
       </ng-container>
-
       <ng-container matColumnDef="plazo">
         <mat-header-cell *matHeaderCellDef> Plazo (años) </mat-header-cell>
         <mat-cell *matCellDef="let bond">{{ bond.plazo }}</mat-cell>
       </ng-container>
-
       <ng-container matColumnDef="monto">
         <mat-header-cell *matHeaderCellDef> Monto </mat-header-cell>
         <mat-cell *matCellDef="let bond">{{ bond.monto | currency }}</mat-cell>
       </ng-container>
-
       <ng-container matColumnDef="acciones">
         <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
         <mat-cell *matCellDef="let bond">

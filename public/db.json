@@ -46,6 +46,14 @@
       "plazo": 4,
       "monto": 200,
       "usuarioId": "e1f3"
+    },
+    {
+      "id": "db44",
+      "nombre": "Bono super",
+      "tasa": 15,
+      "plazo": 5,
+      "monto": 1000,
+      "usuarioId": "da84"
     }
   ]
 }
