@@ -46,6 +46,22 @@
       "plazo": 4,
       "monto": 200,
       "usuarioId": "e1f3"
+    },
+    {
+      "id": "",
+      "nombre": "Julio prime",
+      "tasa": 18,
+      "plazo": 3,
+      "monto": 2500,
+      "usuarioId": "da84"
+    },
+    {
+      "id": "",
+      "nombre": "Bono Sergio",
+      "tasa": 20,
+      "plazo": 10,
+      "monto": 2300,
+      "usuarioId": "e1f3"
     }
   ]
 }

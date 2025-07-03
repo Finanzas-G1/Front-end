@@ -17,7 +17,7 @@ import { CurrencyPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
-import { Bond } from '../bonds/bond.model'; // Importar la interfaz Bond
+import { Bond } from './bond.model'; // Importar la interfaz Bond
 
 @Component({
   selector: 'app-bonds',
