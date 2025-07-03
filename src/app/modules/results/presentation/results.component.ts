@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BondsService } from '../../bonds/presentation/services/bonds.service';
 import { ResultsService } from './results.service';
 import { MatCardModule } from '@angular/material/card';
@@ -9,7 +9,7 @@ import { Color } from '@swimlane/ngx-charts';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { Bond } from '../../bonds/presentation/bonds/bond.model';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-results',
@@ -22,15 +22,13 @@ import { Bond } from '../../bonds/presentation/bonds/bond.model';
     NgxChartsModule,
     MatTooltipModule,
     MatExpansionModule,
-    MatIconModule
+    MatIconModule,
+    MatButton
   ]
 })
 export class ResultsComponent implements OnInit {
-  bondId: string = '';
-  bond: Bond | null = null;
-  results: any = null;
-  
-  // Datos para gráficos
+  bond: any = null;  // Aquí guardamos el bono
+  results: any = null;  // Aquí guardamos los resultados calculados
   flujoCajaChart: any[] = [];
   colorScheme: Color = {
     name: 'custom',
@@ -46,24 +44,30 @@ export class ResultsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private bondsService: BondsService,
-    private resultsService: ResultsService
+    private resultsService: ResultsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.bondId = this.route.snapshot.paramMap.get('id') || '';
-    if (this.bondId) {
-      this.loadBondData();
+    const usuarioId = localStorage.getItem('usuarioId'); // Obtener usuarioId desde localStorage
+    if (usuarioId) {
+      this.loadBondData(usuarioId); // Cargar los bonos según el usuarioId
     }
   }
 
-  loadBondData(): void {
-    this.bondsService.getBond(this.bondId).subscribe({
-      next: (bond: Bond) => {
-        this.bond = bond;
-        this.results = this.resultsService.calculateMetrics(bond);
-        this.prepareChartData();
+  loadBondData(usuarioId: string): void {
+    // Obtener los bonos filtrados por usuarioId
+    this.bondsService.getBondsByUser(usuarioId).subscribe({
+      next: (bonds) => {
+        if (bonds && bonds.length > 0) {
+          this.bond = bonds[0]; // Seleccionamos el primer bono del usuario (puedes ajustar esto según lo necesites)
+          this.results = this.resultsService.calculateMetrics(this.bond);  // Calcular las métricas del bono
+          this.prepareChartData();
+        } else {
+          console.log('No se encontraron bonos para este usuario');
+        }
       },
-      error: (err) => console.error('Error loading bond:', err)
+      error: (err) => console.error('Error loading bond data:', err)
     });
   }
 
@@ -76,13 +80,16 @@ export class ResultsComponent implements OnInit {
     }
   }
 
-  // Método para formatear moneda (reemplazo para CurrencyPipe)
   formatCurrency(value: number): string {
     return '$' + value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   }
 
-  // Método para formatear porcentaje (reemplazo para PercentPipe)
   formatPercent(value: number): string {
     return (value * 100).toFixed(2) + '%';
+  }
+
+  // Método para navegar a la página de Home
+  navigateToHome(): void {
+    this.router.navigate(['/inicio']);
   }
 }

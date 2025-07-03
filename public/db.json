@@ -24,14 +24,6 @@
   ],
   "bonds": [
     {
-      "id": "1",
-      "nombre": "Bono Corporativo A",
-      "tasa": 7.5,
-      "plazo": 5,
-      "monto": 1000,
-      "usuarioId": "1"
-    },
-    {
       "id": "2",
       "nombre": "Bono Corporativo B",
       "tasa": 6.5,
@@ -62,6 +54,22 @@
       "plazo": 10,
       "monto": 2300,
       "usuarioId": "e1f3"
+    },
+    {
+      "id": "",
+      "nombre": "AAA",
+      "tasa": 15,
+      "plazo": 5,
+      "monto": 2000,
+      "usuarioId": "1"
+    },
+    {
+      "id": "5a5d",
+      "nombre": "Bono piola",
+      "tasa": 15,
+      "plazo": 2,
+      "monto": 1000,
+      "usuarioId": "1"
     }
   ]
 }

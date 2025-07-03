@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'bonds', component: BondsComponent },
   //{ path: 'config', component: ConfigComponent },
-  { path: 'results/:id', component: ResultsComponent },
+  { path: 'results', component: ResultsComponent },
 ];
 
 @NgModule({
