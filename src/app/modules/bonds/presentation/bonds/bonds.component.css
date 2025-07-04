@@ -6,7 +6,8 @@ mat-card {
 }
 
 mat-form-field {
-  width: 100%;
+  justify-content: space-around;
+  width: 25%;
 }
 
 mat-grid-list {
