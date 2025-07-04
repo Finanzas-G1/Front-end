@@ -1,0 +1,41 @@
+<mat-card class="config-card">
+  <mat-card-header>
+    <mat-card-title>Configuración del Sistema</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="configForm" (ngSubmit)="saveConfig()" class="config-form">
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Moneda</mat-label>
+        <mat-select formControlName="currency">
+          @for (c of currencies; track c) {
+            <mat-option [value]="c.value">
+              {{ c.label }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Tasa de Interés (ej. 0.05 para 5%)</mat-label>
+        <input matInput type="number" formControlName="interestRate" step="0.01" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Frecuencia de Capitalización</mat-label>
+        <mat-select formControlName="capitalization">
+          @for (cap of capitalizations; track cap) {
+            <mat-option [value]="cap">{{ cap }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!configForm.valid">
+          Guardar Configuración
+        </button>
+      </div>
+
+    </form>
+  </mat-card-content>
+</mat-card>

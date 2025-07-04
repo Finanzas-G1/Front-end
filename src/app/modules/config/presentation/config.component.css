@@ -1,0 +1,51 @@
+.config-card {
+  margin: 30px auto;
+  max-width: 600px;
+  border-radius: 16px;
+  background-color: #F7F9FB;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  color:  #333;
+  border-left: 6px solid #FF6A00;
+}
+
+mat-card-header {
+  background-color: #FF6A00;
+  color: white;
+  padding: 16px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+mat-card-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.config-form {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button[type="submit"] {
+  background-color: #FF6A00;
+  color: white;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #e65c00;
+}
