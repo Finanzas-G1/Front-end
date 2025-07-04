@@ -1,30 +1,35 @@
 .dashboard-card {
-  margin: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 25px; /* Reducido aún más el margen exterior */
+  border-radius: 50px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Sombra más suave */
+  padding: 10px; /* Reducido el padding */
 }
 
 .summary {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 20px;
+  margin-bottom: 8px; /* Menor espacio entre los items */
 }
 
 .summary-item {
   text-align: center;
+  flex: 1; /* Mantiene la distribución proporcional */
+  font-size: 12px; /* Tamaño de la fuente más pequeño */
 }
 
 .summary-item mat-icon {
-  font-size: 40px;
+  font-size: 25px; /* Iconos aún más pequeños */
   color: #FF6A00;
 }
 
 .actions {
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+  justify-content: space-around;
+  margin-top: 10px; /* Menor espacio entre los botones */
 }
 
 .actions button {
-  width: 48%;
+  width: 15%; /* Mantiene el tamaño reducido */
+  font-size: 15px; /* Texto aún más pequeño para los botones */
+  padding: 1px 1px; /* Menor padding */
 }
