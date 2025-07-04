@@ -4,6 +4,7 @@ import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/mat
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatButton} from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-config',
@@ -36,7 +37,7 @@ export class ConfigComponent implements OnInit {
 
   capitalizations = ['Anual', 'Semestral', 'Trimestral', 'Mensual', 'Diaria'];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.configForm = this.fb.group({
@@ -44,6 +45,11 @@ export class ConfigComponent implements OnInit {
       interestRate: [0.05, [Validators.required, Validators.min(0), Validators.max(1)]],
       capitalization: ['Mensual', Validators.required],
     });
+  }
+
+  // Método para navegar a la página de Home
+  navigateToHome(): void {
+    this.router.navigate(['/inicio']);
   }
 
   saveConfig() {

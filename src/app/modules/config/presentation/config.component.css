@@ -1,3 +1,10 @@
+.header {
+  background: linear-gradient(90deg, #FF8C00, #FF6A00);
+  color: white;
+  text-align: center;
+  padding: 1px;
+}
+
 .config-card {
   margin: 30px auto;
   max-width: 600px;
@@ -34,7 +41,8 @@ mat-card-title {
 
 .actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between; /* Espaciado entre los botones */
+  gap: 10px;  /* Espacio adicional entre los botones */
 }
 
 button[type="submit"] {
@@ -48,4 +56,12 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
   background-color: #e65c00;
+}
+/* Estilo para el botón de retroceso */
+button[mat-button] {
+  background-color: #FF6A00;
+  color: white;
+  margin-top: 10px;
+  border-radius: 4px;
+  padding: 8px 16px;
 }

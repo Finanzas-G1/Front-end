@@ -1,3 +1,6 @@
+<div class="header">
+  <h1>Configuración de Tasas (Config)</h1>
+</div>
 <mat-card class="config-card">
   <mat-card-header>
     <mat-card-title>Configuración del Sistema</mat-card-title>
@@ -34,6 +37,10 @@
         <button mat-raised-button color="primary" type="submit" [disabled]="!configForm.valid">
           Guardar Configuración
         </button>
+      </div>
+
+      <div class="actions">
+        <button mat-button (click)="navigateToHome()">Volver a Home</button>
       </div>
 
     </form>
