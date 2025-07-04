@@ -9,12 +9,15 @@ import {RegisterComponent} from './modules/register/presentation/register.compon
 import {LoginComponent} from './modules/login/presentation/login.component';
 import { DashboardComponent } from './modules/dashboard/presentation/dashboard/dashboard.component';
 import { BondsComponent } from './modules/bonds/presentation/bonds/bonds.component';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
 import {ResultsComponent} from './modules/results/presentation/results.component';
+import {ConfigComponent} from './modules/config/presentation/config.component';
 
 @NgModule({
   declarations: [
@@ -33,9 +36,13 @@ import {ResultsComponent} from './modules/results/presentation/results.component
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatSelectModule,
+    MatCardModule,
     DashboardComponent,
     BondsComponent,
-    ResultsComponent
+    ResultsComponent,
+    ReactiveFormsModule,
+    ConfigComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
