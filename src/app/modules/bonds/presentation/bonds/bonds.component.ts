@@ -85,8 +85,11 @@ export class BondsComponent implements OnInit {
   loadBonds() {
     this.bondsService.getBondsByUser(this.usuarioId).subscribe(response => {
       this.valoraciones = response;
+      // Ya no necesitamos modificar los bonos con la configuración, porque ya deberían tenerla
     });
   }
+
+
 
   loadUserConfig() {
     // Cargar la configuración del usuario desde la API o JSON
@@ -116,20 +119,34 @@ export class BondsComponent implements OnInit {
       // Calcular el plazo antes de enviar el bono
       this.calculatePlazo();
 
-      const newBond = {
-        nombre: this.bondFormData.nombre,
-        tasa: this.bondFormData.tasa,
-        valorNominal: this.bondFormData.valorNominal,
-        fechaEmision: this.bondFormData.fechaEmision,
-        fechaVencimiento: this.bondFormData.fechaVencimiento,
-        usuarioId: this.usuarioId,
-        plazo: this.bondFormData.plazo
-      };
+      // Obtener la configuración del usuario para completar los campos del bono
+      this.configService.getConfig(this.usuarioId).subscribe(config => {
+        if (config) {
+          // Si la tasa de interés es "Efectiva", dejamos vacío el campo "capitalization"
+          const capitalization = config.interestType === 'Efectiva' ? '' : config.capitalization;
 
-      this.bondsService.addBond(newBond).subscribe(response => {
-        console.log('Bono agregado:', response);
-        this.loadBonds();  // Recargar la lista de bonos después de agregar uno nuevo
-        this.bondFormData = { nombre: '', valorNominal: 0, interestType: '', fechaEmision: '', fechaVencimiento: '', gracePeriod: '', capitalization: '', tasa: 0, plazo: 0 };  // Limpiar el formulario
+          // Completar la configuración antes de crear el bono
+          const newBond = {
+            nombre: this.bondFormData.nombre,
+            tasa: this.bondFormData.tasa,
+            valorNominal: this.bondFormData.valorNominal,
+            fechaEmision: this.bondFormData.fechaEmision,
+            fechaVencimiento: this.bondFormData.fechaVencimiento,
+            usuarioId: this.usuarioId,
+            plazo: this.bondFormData.plazo,
+            capitalization: capitalization,  // Aquí está el ajuste para "Efectiva"
+            interestType: config.interestType,
+            gracePeriod: config.gracePeriod
+          };
+
+          this.bondsService.addBond(newBond).subscribe(response => {
+            console.log('Bono agregado:', response);
+            this.loadBonds();  // Recargar la lista de bonos después de agregar uno nuevo
+            this.bondFormData = { nombre: '', valorNominal: 0, interestType: '', fechaEmision: '', fechaVencimiento: '', gracePeriod: '', capitalization: '', tasa: 0, plazo: 0 };  // Limpiar el formulario
+          });
+        }
+      }, error => {
+        console.error('Error al obtener la configuración del usuario', error);
       });
     } else {
       console.log('Por favor complete todos los campos obligatorios');

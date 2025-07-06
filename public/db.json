@@ -31,7 +31,10 @@
       "fechaEmision": "2025-07-07",
       "fechaVencimiento": "2027-07-07",
       "usuarioId": "1",
-      "plazo": 2
+      "plazo": 2,
+      "capitalization": "",
+      "interestType": "",
+      "gracePeriod": ""
     },
     {
       "id": "79bd",
@@ -41,17 +44,10 @@
       "fechaEmision": "2026-07-07",
       "fechaVencimiento": "2027-07-07",
       "usuarioId": "1",
-      "plazo": 1
-    },
-    {
-      "id": "b81b",
-      "nombre": "Bono Sam",
-      "tasa": 18,
-      "valorNominal": 1500,
-      "fechaEmision": "2025-07-07",
-      "fechaVencimiento": "2029-07-07",
-      "usuarioId": "da84",
-      "plazo": 4
+      "plazo": 1,
+      "capitalization": "",
+      "interestType": "",
+      "gracePeriod": ""
     },
     {
       "id": "dfa7",
@@ -61,7 +57,49 @@
       "fechaEmision": "2025-07-07",
       "fechaVencimiento": "2028-07-07",
       "usuarioId": "e1f3",
-      "plazo": 3
+      "plazo": 3,
+      "capitalization": "",
+      "interestType": "",
+      "gracePeriod": ""
+    },
+    {
+      "id": "99df",
+      "nombre": "Bono fija",
+      "tasa": 15,
+      "valorNominal": 500,
+      "fechaEmision": "2025-07-07",
+      "fechaVencimiento": "2028-07-07",
+      "usuarioId": "da84",
+      "plazo": 3,
+      "capitalization": "Diaria",
+      "interestType": "Nominal",
+      "gracePeriod": "Parcial"
+    },
+    {
+      "id": "93b4",
+      "nombre": "Bono no frecuencia",
+      "tasa": 13,
+      "valorNominal": 300,
+      "fechaEmision": "2025-07-07",
+      "fechaVencimiento": "2029-07-07",
+      "usuarioId": "da84",
+      "plazo": 4,
+      "capitalization": "Trimestral",
+      "interestType": "Nominal",
+      "gracePeriod": "Parcial"
+    },
+    {
+      "id": "b7b8",
+      "nombre": "Bono frec",
+      "tasa": 18,
+      "valorNominal": 1000,
+      "fechaEmision": "2025-07-07",
+      "fechaVencimiento": "2027-01-07",
+      "usuarioId": "da84",
+      "plazo": 1,
+      "capitalization": "",
+      "interestType": "Efectiva",
+      "gracePeriod": "Total"
     }
   ],
   "config": [
@@ -81,9 +119,9 @@
     },
     {
       "currency": "PEN",
-      "interestType": "Nominal",
-      "capitalization": "Semestral",
-      "gracePeriod": "Parcial",
+      "interestType": "Efectiva",
+      "capitalization": "Trimestral",
+      "gracePeriod": "Total",
       "id": "da84"
     }
   ]
