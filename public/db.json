@@ -20,6 +20,20 @@
       "email": "sam@gmail.com",
       "password": "Sam",
       "confirmPassword": "Sam"
+    },
+    {
+      "id": "8009",
+      "username": "Tommy",
+      "email": "correo@correo.com",
+      "password": "123",
+      "confirmPassword": "123"
+    },
+    {
+      "id": "d7f8",
+      "username": "Minie",
+      "email": "minie@minie.com",
+      "password": "123",
+      "confirmPassword": "123"
     }
   ],
   "bonds": [
@@ -113,6 +127,19 @@
       "capitalization": "",
       "interestType": "Efectiva",
       "gracePeriod": "Parcial"
+    },
+    {
+      "id": "05dc",
+      "nombre": "Bono minie",
+      "tasa": 15,
+      "valorNominal": 1230,
+      "fechaEmision": "2020-07-07",
+      "fechaVencimiento": "2029-07-07",
+      "usuarioId": "d7f8",
+      "plazo": 9,
+      "capitalization": "",
+      "interestType": "Efectiva",
+      "gracePeriod": "Total"
     }
   ],
   "config": [
@@ -136,6 +163,20 @@
       "capitalization": "Trimestral",
       "gracePeriod": "Total",
       "id": "da84"
+    },
+    {
+      "currency": "",
+      "interestType": "",
+      "capitalization": "",
+      "gracePeriod": "",
+      "id": "8009"
+    },
+    {
+      "currency": "PEN",
+      "interestType": "Efectiva",
+      "capitalization": "Mensual",
+      "gracePeriod": "Total",
+      "id": "d7f8"
     }
   ]
 }

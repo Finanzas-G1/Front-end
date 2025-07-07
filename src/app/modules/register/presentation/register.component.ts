@@ -28,10 +28,32 @@ export class RegisterComponent {
 
   onSubmit() {
     if (this.form.valid && this.form.value.password === this.form.value.confirmPassword) {
-      this.http.post('http://localhost:3000/users', this.form.value).subscribe(() => {
+      // Paso 1: Registrar el nuevo usuario
+      this.http.post('http://localhost:3000/users', this.form.value).subscribe((userResponse: any) => {
         alert('Usuario registrado con éxito');
+
+        // Crear configuración predeterminada para el nuevo usuario
+        const newConfig = {
+          currency: 'PEN',
+          interestType: 'Nominal',
+          capitalization: 'Mensual',
+          gracePeriod: 'Parcial',
+          id: userResponse.id  // Usar el id del usuario registrado
+        };
+
+        // Paso 2: Crear la configuración del usuario
+        this.http.post('http://localhost:3000/config', newConfig).subscribe(() => {
+          console.log('Configuración predeterminada creada');
+        }, (error) => {
+          console.error('Error al crear la configuración predeterminada', error);
+        });
+
+        // Limpiar el formulario y redirigir al login
         this.form.reset();
         this.router.navigate(['/login']);
+      }, (error) => {
+        console.error('Error al registrar el usuario', error);
+        alert('Hubo un problema al registrar el usuario');
       });
     } else {
       alert('Verifica los campos del formulario');
