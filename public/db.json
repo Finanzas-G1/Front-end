@@ -24,52 +24,105 @@
   ],
   "bonds": [
     {
-      "id": "2",
-      "nombre": "Bono Corporativo B",
-      "tasa": 6.5,
-      "plazo": 7,
-      "monto": 2000,
-      "usuarioId": "e1f3"
-    },
-    {
-      "id": "8563",
-      "nombre": "Bono junio",
-      "tasa": 15,
-      "plazo": 4,
-      "monto": 200,
-      "usuarioId": "e1f3"
-    },
-    {
-      "id": "",
-      "nombre": "Julio prime",
-      "tasa": 18,
-      "plazo": 3,
-      "monto": 2500,
-      "usuarioId": "da84"
-    },
-    {
-      "id": "",
-      "nombre": "Bono Sergio",
-      "tasa": 20,
-      "plazo": 10,
-      "monto": 2300,
-      "usuarioId": "e1f3"
-    },
-    {
-      "id": "",
-      "nombre": "AAA",
-      "tasa": 15,
-      "plazo": 5,
-      "monto": 2000,
-      "usuarioId": "1"
-    },
-    {
-      "id": "5a5d",
-      "nombre": "Bono piola",
-      "tasa": 15,
+      "id": "b80f",
+      "nombre": "Bono4",
+      "tasa": 10,
+      "valorNominal": 100,
+      "fechaEmision": "2025-07-07",
+      "fechaVencimiento": "2027-07-07",
+      "usuarioId": "1",
       "plazo": 2,
-      "monto": 1000,
-      "usuarioId": "1"
+      "capitalization": "",
+      "interestType": "",
+      "gracePeriod": ""
+    },
+    {
+      "id": "79bd",
+      "nombre": "Bono5",
+      "tasa": 8,
+      "valorNominal": 100,
+      "fechaEmision": "2026-07-07",
+      "fechaVencimiento": "2027-07-07",
+      "usuarioId": "1",
+      "plazo": 1,
+      "capitalization": "",
+      "interestType": "",
+      "gracePeriod": ""
+    },
+    {
+      "id": "dfa7",
+      "nombre": "Bono Sergio",
+      "tasa": 14,
+      "valorNominal": 400,
+      "fechaEmision": "2025-07-07",
+      "fechaVencimiento": "2028-07-07",
+      "usuarioId": "e1f3",
+      "plazo": 3,
+      "capitalization": "",
+      "interestType": "",
+      "gracePeriod": ""
+    },
+    {
+      "id": "99df",
+      "nombre": "Bono fija",
+      "tasa": 15,
+      "valorNominal": 500,
+      "fechaEmision": "2025-07-07",
+      "fechaVencimiento": "2028-07-07",
+      "usuarioId": "da84",
+      "plazo": 3,
+      "capitalization": "Diaria",
+      "interestType": "Nominal",
+      "gracePeriod": "Parcial"
+    },
+    {
+      "id": "93b4",
+      "nombre": "Bono no frecuencia",
+      "tasa": 13,
+      "valorNominal": 300,
+      "fechaEmision": "2025-07-07",
+      "fechaVencimiento": "2029-07-07",
+      "usuarioId": "da84",
+      "plazo": 4,
+      "capitalization": "Trimestral",
+      "interestType": "Nominal",
+      "gracePeriod": "Parcial"
+    },
+    {
+      "id": "b7b8",
+      "nombre": "Bono frec",
+      "tasa": 18,
+      "valorNominal": 1000,
+      "fechaEmision": "2025-07-07",
+      "fechaVencimiento": "2027-01-07",
+      "usuarioId": "da84",
+      "plazo": 1,
+      "capitalization": "",
+      "interestType": "Efectiva",
+      "gracePeriod": "Total"
+    }
+  ],
+  "config": [
+    {
+      "currency": "PEN",
+      "interestType": "Nominal",
+      "capitalization": "Semestral",
+      "gracePeriod": "Parcial",
+      "id": "1"
+    },
+    {
+      "currency": "PEN",
+      "interestType": "Nominal",
+      "capitalization": "Trimestral",
+      "gracePeriod": "Total",
+      "id": "e1f3"
+    },
+    {
+      "currency": "PEN",
+      "interestType": "Efectiva",
+      "capitalization": "Trimestral",
+      "gracePeriod": "Total",
+      "id": "da84"
     }
   ]
 }

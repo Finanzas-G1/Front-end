@@ -18,24 +18,32 @@
 
         <mat-grid-tile>
           <mat-form-field appearance="fill">
+            <mat-label>Valor Nominal</mat-label>
+            <input matInput type="number" [(ngModel)]="bondFormData.valorNominal" name="valorNominal" required #valorNominal="ngModel">
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha de Emisión</mat-label>
+            <input matInput type="date" [(ngModel)]="bondFormData.fechaEmision" name="fechaEmision" required #fechaEmision="ngModel">
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha de Vencimiento</mat-label>
+            <input matInput type="date" [(ngModel)]="bondFormData.fechaVencimiento" name="fechaVencimiento" required #fechaVencimiento="ngModel">
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
             <mat-label>Tasa</mat-label>
             <input matInput type="number" [(ngModel)]="bondFormData.tasa" name="tasa" required #tasa="ngModel">
           </mat-form-field>
         </mat-grid-tile>
 
-        <mat-grid-tile>
-          <mat-form-field appearance="fill">
-            <mat-label>Plazo (años)</mat-label>
-            <input matInput type="number" [(ngModel)]="bondFormData.plazo" name="plazo" required #plazo="ngModel">
-          </mat-form-field>
-        </mat-grid-tile>
-
-        <mat-grid-tile>
-          <mat-form-field appearance="fill">
-            <mat-label>Monto</mat-label>
-            <input matInput type="number" [(ngModel)]="bondFormData.monto" name="monto" required #monto="ngModel">
-          </mat-form-field>
-        </mat-grid-tile>
       </mat-grid-list>
 
       <div class="actions">
@@ -56,23 +64,51 @@
         <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
         <mat-cell *matCellDef="let bond">{{ bond.nombre }}</mat-cell>
       </ng-container>
+
+      <ng-container matColumnDef="valorNominal">
+        <mat-header-cell *matHeaderCellDef> Valor Nominal </mat-header-cell>
+        <mat-cell *matCellDef="let bond">{{ bond.valorNominal }}</mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="tasa">
         <mat-header-cell *matHeaderCellDef> Tasa </mat-header-cell>
         <mat-cell *matCellDef="let bond">{{ bond.tasa }}%</mat-cell>
       </ng-container>
+
       <ng-container matColumnDef="plazo">
         <mat-header-cell *matHeaderCellDef> Plazo (años) </mat-header-cell>
         <mat-cell *matCellDef="let bond">{{ bond.plazo }}</mat-cell>
       </ng-container>
+
       <ng-container matColumnDef="monto">
         <mat-header-cell *matHeaderCellDef> Monto </mat-header-cell>
         <mat-cell *matCellDef="let bond">{{ bond.monto | currency }}</mat-cell>
       </ng-container>
+
+      <ng-container matColumnDef="interestType">
+        <mat-header-cell *matHeaderCellDef> Tasa de Interés </mat-header-cell>
+        <mat-cell *matCellDef="let bond">{{ bond.interestType }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="gracePeriod">
+        <mat-header-cell *matHeaderCellDef> Plazo de Gracia </mat-header-cell>
+        <mat-cell *matCellDef="let bond">{{ bond.gracePeriod }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="capitalization">
+        <mat-header-cell *matHeaderCellDef> Frecuencia de Pagos </mat-header-cell>
+        <mat-cell *matCellDef="let bond">{{ bond.capitalization }}</mat-cell>
+      </ng-container>
+
+
       <ng-container matColumnDef="acciones">
         <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
         <mat-cell *matCellDef="let bond">
+          <button mat-icon-button color="accent" (click)="editBond(bond.id)">
+            <mat-icon>edit</mat-icon>
+          </button>
           <button mat-icon-button color="warn" (click)="deleteBond(bond.id)">
-            <mat-icon>X</mat-icon>
+            <mat-icon>delete</mat-icon>
           </button>
         </mat-cell>
       </ng-container>
