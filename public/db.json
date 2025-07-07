@@ -139,6 +139,19 @@
       "gracePeriod": "Parcial",
       "capitalization": "Mensual",
       "id": "Pdn-8Ro"
+    },
+    {
+      "nombre": "asdadad",
+      "valorNominal": 50000,
+      "tasa": 10,
+      "fechaEmision": "2020-02-20",
+      "fechaVencimiento": "2025-02-20",
+      "usuarioId": "1",
+      "plazo": 5,
+      "interestType": "Nominal",
+      "gracePeriod": "Parcial",
+      "capitalization": "Mensual",
+      "id": "eiUGdxn"
     }
   ],
   "config": [
