@@ -113,6 +113,32 @@
       "capitalization": "",
       "interestType": "Efectiva",
       "gracePeriod": "Parcial"
+    },
+    {
+      "nombre": "aaa",
+      "valorNominal": 8,
+      "tasa": 10,
+      "fechaEmision": "2024-05-20",
+      "fechaVencimiento": "2025-02-20",
+      "usuarioId": "1",
+      "plazo": 0,
+      "interestType": "Nominal",
+      "gracePeriod": "Parcial",
+      "capitalization": "Mensual",
+      "id": "CR4L_4l"
+    },
+    {
+      "nombre": "sdfsd",
+      "valorNominal": 15000,
+      "tasa": 10,
+      "fechaEmision": "2025-10-10",
+      "fechaVencimiento": "2026-10-20",
+      "usuarioId": "1",
+      "plazo": 1,
+      "interestType": "Nominal",
+      "gracePeriod": "Parcial",
+      "capitalization": "Mensual",
+      "id": "Pdn-8Ro"
     }
   ],
   "config": [
