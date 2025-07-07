@@ -24,45 +24,6 @@
   ],
   "bonds": [
     {
-      "id": "b80f",
-      "nombre": "Bono4",
-      "tasa": 10,
-      "valorNominal": 100,
-      "fechaEmision": "2025-07-07",
-      "fechaVencimiento": "2027-07-07",
-      "usuarioId": "1",
-      "plazo": 2,
-      "capitalization": "",
-      "interestType": "",
-      "gracePeriod": ""
-    },
-    {
-      "id": "79bd",
-      "nombre": "Bono5",
-      "tasa": 8,
-      "valorNominal": 100,
-      "fechaEmision": "2026-07-07",
-      "fechaVencimiento": "2027-07-07",
-      "usuarioId": "1",
-      "plazo": 1,
-      "capitalization": "",
-      "interestType": "",
-      "gracePeriod": ""
-    },
-    {
-      "id": "dfa7",
-      "nombre": "Bono Sergio",
-      "tasa": 14,
-      "valorNominal": 400,
-      "fechaEmision": "2025-07-07",
-      "fechaVencimiento": "2028-07-07",
-      "usuarioId": "e1f3",
-      "plazo": 3,
-      "capitalization": "",
-      "interestType": "",
-      "gracePeriod": ""
-    },
-    {
       "id": "99df",
       "nombre": "Bono fija",
       "tasa": 15,
@@ -100,21 +61,73 @@
       "capitalization": "",
       "interestType": "Efectiva",
       "gracePeriod": "Total"
+    },
+    {
+      "id": "0841",
+      "nombre": "Bono Silva",
+      "tasa": 20,
+      "valorNominal": 500,
+      "fechaEmision": "2028-07-07",
+      "fechaVencimiento": "2030-07-07",
+      "usuarioId": "1",
+      "plazo": 2,
+      "capitalization": "",
+      "interestType": "Efectiva",
+      "gracePeriod": "Total"
+    },
+    {
+      "id": "ba9d",
+      "nombre": "Bono 2",
+      "tasa": 15,
+      "valorNominal": 1000,
+      "fechaEmision": "2023-07-07",
+      "fechaVencimiento": "2025-07-07",
+      "usuarioId": "1",
+      "plazo": 2,
+      "capitalization": "",
+      "interestType": "Efectiva",
+      "gracePeriod": "Total"
+    },
+    {
+      "id": "8094",
+      "nombre": "Bono 3",
+      "tasa": 15,
+      "valorNominal": 900,
+      "fechaEmision": "2025-07-07",
+      "fechaVencimiento": "2030-07-07",
+      "usuarioId": "1",
+      "plazo": 5,
+      "capitalization": "Mensual",
+      "interestType": "Nominal",
+      "gracePeriod": "Parcial"
+    },
+    {
+      "id": "7f4d",
+      "nombre": "Bono Sergio",
+      "tasa": 16,
+      "valorNominal": 1000,
+      "fechaEmision": "2025-07-07",
+      "fechaVencimiento": "2027-07-07",
+      "usuarioId": "e1f3",
+      "plazo": 2,
+      "capitalization": "",
+      "interestType": "Efectiva",
+      "gracePeriod": "Parcial"
     }
   ],
   "config": [
     {
       "currency": "PEN",
       "interestType": "Nominal",
-      "capitalization": "Semestral",
+      "capitalization": "Mensual",
       "gracePeriod": "Parcial",
       "id": "1"
     },
     {
       "currency": "PEN",
-      "interestType": "Nominal",
+      "interestType": "Efectiva",
       "capitalization": "Trimestral",
-      "gracePeriod": "Total",
+      "gracePeriod": "Parcial",
       "id": "e1f3"
     },
     {

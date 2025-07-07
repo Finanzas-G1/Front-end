@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
     const usuarioId = localStorage.getItem('usuarioId') || '';
     this.bondsService.getBondsByUser(usuarioId).subscribe((bonos: any[]) => {
       this.totalBonos = bonos.length;
-      this.totalMonto = bonos.reduce((acc, bond) => acc + bond.monto, 0);
+      this.totalMonto = bonos.reduce((acc, bond) => acc + bond.valorNominal, 0);
       this.promedioTasa = bonos.reduce((acc, bond) => acc + bond.tasa, 0) / this.totalBonos;
 
       // Preparar los datos para el gráfico de barras

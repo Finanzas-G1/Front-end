@@ -60,7 +60,9 @@ export class ConfigComponent implements OnInit {
         });
 
         // Sincronización adicional si fuera necesario
-        this.configForm.controls['currency'].setValue(this.currentUserConfig.currency);
+        this.configForm.patchValue({
+          currency: this.currentUserConfig.currency,  // Cambiar a patchValue
+        });
       },
       (error) => {
         console.error('Error al obtener la configuración del usuario', error);
