@@ -9,11 +9,11 @@
     <form [formGroup]="configForm" (ngSubmit)="saveConfig()" class="config-form">
 
       <!-- Moneda -->
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="fill">
         <mat-label>Moneda</mat-label>
         <mat-select formControlName="currency">
-          <mat-option *ngFor="let cap of currencies" [value]="cap.value">
-            {{ cap.label }}
+          <mat-option *ngFor="let currency of currencies" [value]="currency.value">
+            {{ currency.label }}
           </mat-option>
         </mat-select>
       </mat-form-field>

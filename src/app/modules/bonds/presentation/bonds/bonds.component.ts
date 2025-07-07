@@ -70,6 +70,9 @@ export class BondsComponent implements OnInit {
 
   usuarioId: string = localStorage.getItem('usuarioId') || '';  // Obtener usuarioId desde localStorage
 
+  editMode: boolean = false;  // Determina si estamos en modo de edición
+  selectedBondId: string = '';  // Almacena el id del bono que estamos editando
+
   constructor(private bondsService: BondsService, private router: Router, private configService: ConfigService) {}
 
   ngOnInit(): void {
@@ -85,20 +88,16 @@ export class BondsComponent implements OnInit {
   loadBonds() {
     this.bondsService.getBondsByUser(this.usuarioId).subscribe(response => {
       this.valoraciones = response;
-      // Ya no necesitamos modificar los bonos con la configuración, porque ya deberían tenerla
     });
   }
-
-
 
   loadUserConfig() {
     // Cargar la configuración del usuario desde la API o JSON
     this.configService.getConfig(this.usuarioId).subscribe((config: any) => {
       if (config) {
-        // Asignamos los valores de la configuración a los campos correspondientes
         this.bondFormData.interestType = config.interestType;
         this.bondFormData.gracePeriod = config.gracePeriod;
-        this.bondFormData.capitalization = config.capitalization;  // Capitalization como frecuencia de pagos
+        this.bondFormData.capitalization = config.capitalization;
       }
     }, (error) => {
       console.error('Error al cargar la configuración del usuario', error);
@@ -113,7 +112,21 @@ export class BondsComponent implements OnInit {
     this.bondFormData.plazo = Math.floor(diferenciaTiempo / (1000 * 3600 * 24 * 365)); // En años
   }
 
-  // Método para agregar un bono
+  // Método para manejar la edición de un bono
+  editBond(bondId: string) {
+    const bondToEdit = this.valoraciones.find(bond => bond.id === bondId);
+    if (bondToEdit) {
+      this.selectedBondId = bondId;
+      this.bondFormData = { ...bondToEdit };
+      this.editMode = true;  // Cambiar a modo edición
+
+      // Si la tasa de interés es "Efectiva", dejar vacío el campo "capitalization"
+      if (this.bondFormData.interestType === 'Efectiva') {
+        this.bondFormData.capitalization = '';
+      }
+    }
+  }
+
   onSubmit() {
     if (this.bondFormData.nombre && this.bondFormData.valorNominal && this.bondFormData.fechaEmision && this.bondFormData.fechaVencimiento && this.bondFormData.tasa) {
       // Calcular el plazo antes de enviar el bono
@@ -122,10 +135,8 @@ export class BondsComponent implements OnInit {
       // Obtener la configuración del usuario para completar los campos del bono
       this.configService.getConfig(this.usuarioId).subscribe(config => {
         if (config) {
-          // Si la tasa de interés es "Efectiva", dejamos vacío el campo "capitalization"
           const capitalization = config.interestType === 'Efectiva' ? '' : config.capitalization;
 
-          // Completar la configuración antes de crear el bono
           const newBond = {
             nombre: this.bondFormData.nombre,
             tasa: this.bondFormData.tasa,
@@ -134,16 +145,26 @@ export class BondsComponent implements OnInit {
             fechaVencimiento: this.bondFormData.fechaVencimiento,
             usuarioId: this.usuarioId,
             plazo: this.bondFormData.plazo,
-            capitalization: capitalization,  // Aquí está el ajuste para "Efectiva"
+            capitalization: capitalization,
             interestType: config.interestType,
             gracePeriod: config.gracePeriod
           };
 
-          this.bondsService.addBond(newBond).subscribe(response => {
-            console.log('Bono agregado:', response);
-            this.loadBonds();  // Recargar la lista de bonos después de agregar uno nuevo
-            this.bondFormData = { nombre: '', valorNominal: 0, interestType: '', fechaEmision: '', fechaVencimiento: '', gracePeriod: '', capitalization: '', tasa: 0, plazo: 0 };  // Limpiar el formulario
-          });
+          if (this.editMode) {
+            // Si estamos en modo edición, actualizamos el bono
+            this.bondsService.updateBond(this.selectedBondId, newBond).subscribe(response => {
+              console.log('Bono actualizado:', response);
+              this.loadBonds();  // Recargar la lista de bonos después de la actualización
+              this.resetForm();  // Limpiar el formulario
+            });
+          } else {
+            // Si estamos en modo creación, agregamos el bono
+            this.bondsService.addBond(newBond).subscribe(response => {
+              console.log('Bono agregado:', response);
+              this.loadBonds();  // Recargar la lista de bonos después de agregar uno nuevo
+              this.resetForm();  // Limpiar el formulario
+            });
+          }
         }
       }, error => {
         console.error('Error al obtener la configuración del usuario', error);
@@ -153,17 +174,10 @@ export class BondsComponent implements OnInit {
     }
   }
 
-  // Método para manejar la edición de un bono
-  editBond(bondId: string) {
-    const bondToEdit = this.valoraciones.find(bond => bond.id === bondId);
-    if (bondToEdit) {
-      this.bondFormData = { ...bondToEdit };
-
-      // Configuración de visibilidad y valores según tipo de interés
-      if (this.bondFormData.interestType === 'Efectiva') {
-        this.bondFormData.capitalization = '';  // Dejar en blanco si la tasa es efectiva
-      }
-    }
+  resetForm() {
+    this.bondFormData = { nombre: '', valorNominal: 0, interestType: '', fechaEmision: '', fechaVencimiento: '', gracePeriod: '', capitalization: '', tasa: 0, plazo: 0 };
+    this.editMode = false;  // Desactivar el modo de edición
+    this.selectedBondId = '';  // Limpiar el id del bono seleccionado
   }
 
   // Método para navegar a la página de Home
