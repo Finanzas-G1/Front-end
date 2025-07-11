@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {MatOption, MatSelect} from '@angular/material/select';
-import {MatButton} from '@angular/material/button';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatOption, MatSelect } from '@angular/material/select';
+import { MatButton } from '@angular/material/button';
 import { Router } from '@angular/router';
-import {NgForOf, NgIf} from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { ConfigService } from '../services/config.service';  // Importa el servicio
 
 @Component({
@@ -26,9 +26,8 @@ import { ConfigService } from '../services/config.service';  // Importa el servi
     NgForOf,
     NgIf
   ],
-
+  standalone: true
 })
-
 export class ConfigComponent implements OnInit {
 
   public configForm!: FormGroup;
@@ -36,8 +35,8 @@ export class ConfigComponent implements OnInit {
   userId: string = localStorage.getItem('usuarioId') || '';  // Obtener userId desde localStorage
 
   currencies = [
-    { label: 'PEN', value: 'PEN' },
-    { label: 'USD', value: 'USD' },
+    { label: 'Moneda: USD', value: 'USD' },
+    { label: 'Moneda: PEN', value: 'PEN' }
   ];
 
   capitalizations = ['Anual', 'Semestral', 'Trimestral', 'Mensual', 'Diaria'];
@@ -53,15 +52,10 @@ export class ConfigComponent implements OnInit {
 
         // Inicializar el formulario con la configuración del usuario
         this.configForm = this.fb.group({
-          currency: [this.currentUserConfig.currency, Validators.required],
+          currency: [this.currentUserConfig.currency, Validators.required], // 'currency' en lugar de 'moneda'
           interestType: [this.currentUserConfig.interestType, Validators.required],
           capitalization: [this.currentUserConfig.capitalization, Validators.required],
           gracePeriod: [this.currentUserConfig.gracePeriod, Validators.required]
-        });
-
-        // Sincronización adicional si fuera necesario
-        this.configForm.patchValue({
-          currency: this.currentUserConfig.currency,  // Cambiar a patchValue
         });
       },
       (error) => {
@@ -77,12 +71,22 @@ export class ConfigComponent implements OnInit {
     this.router.navigate(['/inicio']);
   }
 
-  // Método para guardar la configuración en la API usando el ConfigService
+  // Método para guardar la configuración en el backend
   saveConfig() {
-    // Verificar si la configuración del usuario existe
-    if (this.currentUserConfig) {
-      // Actualizar la configuración del usuario en la API
-      this.configService.updateConfig(this.userId, this.configForm.value).subscribe(
+    // Verificar si el formulario es válido
+    if (this.configForm.valid) {
+      const currencyValue = this.configForm.value.currency;
+
+      // Verificar si currencyValue está en currencyMap de forma segura (aunque no lo estamos mapeando ahora)
+      const payload = {
+        ...this.configForm.value,
+        currency: currencyValue  // Usamos 'currency' tal como está
+      };
+
+      console.log('Enviando al servidor con moneda:', payload);
+
+      // Enviar la configuración al servidor
+      this.configService.updateConfig(this.userId, payload).subscribe(
         (response) => {
           console.log('Configuración guardada en el servidor:', response);
           alert('Configuración guardada con éxito');
@@ -92,7 +96,7 @@ export class ConfigComponent implements OnInit {
         }
       );
     } else {
-      console.error('No se encontró la configuración del usuario');
+      console.error('Formulario inválido', this.configForm.errors);
     }
   }
 }
