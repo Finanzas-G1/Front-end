@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ConfigService {
 
-  private apiUrl = 'http://localhost:3000/config';  // URL de la API
+  private apiUrl = 'https://json-squema.onrender.com/config';  // URL de la API
 
   constructor(private http: HttpClient) { }
 

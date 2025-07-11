@@ -33,7 +33,7 @@ export interface BondResults {
   providedIn: 'root'
 })
 export class ResultsService {
-  private apiUrl = 'http://localhost:3000/bonds';
+  private apiUrl = 'https://json-squema.onrender.com/bonds';
 
   constructor(private http: HttpClient) { }
 

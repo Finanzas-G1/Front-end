@@ -7,7 +7,7 @@ import { Bond } from '../../../results/presentation/results.service';
   providedIn: 'root'
 })
 export class BondsService {
-  private apiUrl = 'http://localhost:3000/bonds';
+  private apiUrl = 'https://json-squema.onrender.com/bonds';
 
   constructor(private http: HttpClient) { }
 

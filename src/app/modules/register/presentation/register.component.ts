@@ -29,7 +29,7 @@ export class RegisterComponent {
   onSubmit() {
     if (this.form.valid && this.form.value.password === this.form.value.confirmPassword) {
       // Paso 1: Registrar el nuevo usuario
-      this.http.post('http://localhost:3000/users', this.form.value).subscribe((userResponse: any) => {
+      this.http.post('https://json-squema.onrender.com/users', this.form.value).subscribe((userResponse: any) => {
         alert('Usuario registrado con éxito');
 
         // Crear configuración predeterminada para el nuevo usuario
@@ -42,7 +42,7 @@ export class RegisterComponent {
         };
 
         // Paso 2: Crear la configuración del usuario
-        this.http.post('http://localhost:3000/config', newConfig).subscribe(() => {
+        this.http.post('https://json-squema.onrender.com/config', newConfig).subscribe(() => {
           console.log('Configuración predeterminada creada');
         }, (error) => {
           console.error('Error al crear la configuración predeterminada', error);
