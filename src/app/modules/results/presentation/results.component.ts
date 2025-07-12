@@ -39,7 +39,8 @@ export class ResultsComponent implements OnInit {
   bond: Bond | null = null;
   results: BondResults | null = null;
   flujoCajaChart: any[] = [];
-  
+  currency: string | null = null;
+
   colorScheme: Color = {
     name: 'custom',
     selectable: true,
@@ -79,10 +80,10 @@ export class ResultsComponent implements OnInit {
 
   loadBondData(bondId: string | null): void {
     if (!bondId) return;
-    
+
     const selectedBond = this.bonds.find(b => b.id === bondId);
     if (!selectedBond) return;
-    
+
     this.bond = selectedBond;
     this.results = this.resultsService.calculateMetrics(selectedBond);
     this.prepareChartData();
@@ -99,6 +100,11 @@ export class ResultsComponent implements OnInit {
         value: item.value + (item.final || 0)
       }));
     }
+  }
+
+  // Función para determinar el símbolo de la moneda
+  getCurrencySymbol(): string {
+    return this.currency === 'PEN' ? 'S/.' : (this.currency === 'USD' ? '$' : '');
   }
 
   navigateToHome(): void {
