@@ -20,20 +20,6 @@
       "email": "sam@gmail.com",
       "password": "Sam",
       "confirmPassword": "Sam"
-    },
-    {
-      "id": "8009",
-      "username": "Tommy",
-      "email": "correo@correo.com",
-      "password": "123",
-      "confirmPassword": "123"
-    },
-    {
-      "id": "d7f8",
-      "username": "Minie",
-      "email": "minie@minie.com",
-      "password": "123",
-      "confirmPassword": "123"
     }
   ],
   "bonds": [
@@ -129,17 +115,43 @@
       "gracePeriod": "Parcial"
     },
     {
-      "id": "05dc",
-      "nombre": "Bono minie",
-      "tasa": 15,
-      "valorNominal": 1230,
-      "fechaEmision": "2020-07-07",
-      "fechaVencimiento": "2029-07-07",
-      "usuarioId": "d7f8",
-      "plazo": 9,
-      "capitalization": "",
-      "interestType": "Efectiva",
-      "gracePeriod": "Total"
+      "nombre": "aaa",
+      "valorNominal": 8,
+      "tasa": 10,
+      "fechaEmision": "2024-05-20",
+      "fechaVencimiento": "2025-02-20",
+      "usuarioId": "1",
+      "plazo": 0,
+      "interestType": "Nominal",
+      "gracePeriod": "Parcial",
+      "capitalization": "Mensual",
+      "id": "CR4L_4l"
+    },
+    {
+      "nombre": "sdfsd",
+      "valorNominal": 15000,
+      "tasa": 10,
+      "fechaEmision": "2025-10-10",
+      "fechaVencimiento": "2026-10-20",
+      "usuarioId": "1",
+      "plazo": 1,
+      "interestType": "Nominal",
+      "gracePeriod": "Parcial",
+      "capitalization": "Mensual",
+      "id": "Pdn-8Ro"
+    },
+    {
+      "nombre": "asdadad",
+      "valorNominal": 50000,
+      "tasa": 10,
+      "fechaEmision": "2020-02-20",
+      "fechaVencimiento": "2025-02-20",
+      "usuarioId": "1",
+      "plazo": 5,
+      "interestType": "Nominal",
+      "gracePeriod": "Parcial",
+      "capitalization": "Mensual",
+      "id": "eiUGdxn"
     }
   ],
   "config": [
@@ -163,20 +175,6 @@
       "capitalization": "Trimestral",
       "gracePeriod": "Total",
       "id": "da84"
-    },
-    {
-      "currency": "",
-      "interestType": "",
-      "capitalization": "",
-      "gracePeriod": "",
-      "id": "8009"
-    },
-    {
-      "currency": "PEN",
-      "interestType": "Efectiva",
-      "capitalization": "Mensual",
-      "gracePeriod": "Total",
-      "id": "d7f8"
     }
   ]
 }
