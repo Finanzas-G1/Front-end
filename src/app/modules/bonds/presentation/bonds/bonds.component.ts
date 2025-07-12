@@ -90,6 +90,9 @@ export class BondsComponent implements OnInit {
         this.bondFormData.interestType = config.interestType;
         this.bondFormData.gracePeriod = config.gracePeriod;
         this.bondFormData.capitalization = config.capitalization;
+        if (this.bondFormData.interestType === 'Efectiva') {
+          this.bondFormData.capitalization = '';
+        }
       }
     });
   }
@@ -106,7 +109,7 @@ export class BondsComponent implements OnInit {
       this.selectedBondId = bondId;
       this.bondFormData = { ...bondToEdit };
       this.editMode = true;
-      
+
       if (this.bondFormData.interestType === 'Efectiva') {
         this.bondFormData.capitalization = '';
       }
@@ -114,10 +117,10 @@ export class BondsComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.bondFormData.nombre && this.bondFormData.valorNominal && 
-        this.bondFormData.fechaEmision && this.bondFormData.fechaVencimiento && 
+    if (this.bondFormData.nombre && this.bondFormData.valorNominal &&
+        this.bondFormData.fechaEmision && this.bondFormData.fechaVencimiento &&
         this.bondFormData.tasa) {
-      
+
       this.calculatePlazo();
       this.bondFormData.usuarioId = this.usuarioId;
 
