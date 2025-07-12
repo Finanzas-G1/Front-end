@@ -1,113 +1,185 @@
 <div class="header">
-    <h1>Consolidación de Reporte (Results)</h1>
+  <h1>Consolidación de Reporte</h1>
 </div>
+
 <div class="results-container">
+  <!-- Selector de Bonos -->
+  <mat-card class="selection-card">
+    <mat-card-header>
+      <mat-card-title>Seleccionar Bono</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Seleccione un bono</mat-label>
+        <mat-select [(ngModel)]="selectedBondId" (selectionChange)="onBondSelectionChange()">
+          <mat-option *ngFor="let bond of bonds" [value]="bond.id">
+            {{bond.nombre}} - {{bond.valorNominal | currency}} ({{bond.tasa | percent:'1.2-2'}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Resultados -->
+  <div *ngIf="bond && results">
     <!-- Header -->
     <mat-card class="header-card">
-        <mat-card-header>
-            <mat-card-title>Resultados para: {{bond?.nombre || 'Cargando...'}}</mat-card-title>
-        </mat-card-header>
+      <mat-card-header>
+        <mat-card-title>Resultados para: {{bond.nombre}}</mat-card-title>
+        <mat-card-subtitle>
+          Valor: {{bond.valorNominal | currency}} | Tasa: {{bond.tasa | percent:'1.2-2'}} | Plazo: {{bond.plazo}} años
+        </mat-card-subtitle>
+      </mat-card-header>
     </mat-card>
 
     <!-- KPIs -->
     <div class="kpi-row">
-        <mat-card class="kpi-card">
-            <mat-card-header>
-                <mat-card-title>TCEA</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <h1>{{results?.tcea | percent:'1.2-2'}}</h1>
-            </mat-card-content>
-        </mat-card>
+      <mat-card class="kpi-card">
+        <mat-card-header>
+          <mat-card-title>TCEA</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h1>{{results.tcea | percent:'1.2-2'}}</h1>
+          <p>Tasa de Costo Efectivo Anual</p>
+        </mat-card-content>
+      </mat-card>
 
-        <mat-card class="kpi-card">
-            <mat-card-header>
-                <mat-card-title>TREA</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <h1>{{results?.trea | percent:'1.2-2'}}</h1>
-            </mat-card-content>
-        </mat-card>
+      <mat-card class="kpi-card">
+        <mat-card-header>
+          <mat-card-title>TREA</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h1>{{results.trea | percent:'1.2-2'}}</h1>
+          <p>Tasa de Rendimiento Efectivo Anual</p>
+        </mat-card-content>
+      </mat-card>
 
-        <mat-card class="kpi-card" [class.warning]="results?.riesgo === 'ALTO'">
-            <mat-card-header>
-                <mat-card-title>Precio Máximo</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <h1>
-                    {{results?.precioMax | currency}}
-                    <mat-icon *ngIf="results?.riesgo === 'ALTO'" color="warn">warning</mat-icon>
-                </h1>
-            </mat-card-content>
-        </mat-card>
-        <div class="actions">
-            <button mat-button (click)="navigateToHome()">Volver a Home</button>
-        </div>
+      <mat-card class="kpi-card" [class.warning]="results.riesgo === 'ALTO'">
+        <mat-card-header>
+          <mat-card-title>Precio Máximo</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h1>
+            {{results.precioMax | currency}}
+            <mat-icon *ngIf="results.riesgo === 'ALTO'" color="warn">warning</mat-icon>
+          </h1>
+          <p>Valor teórico de mercado</p>
+        </mat-card-content>
+      </mat-card>
     </div>
+
+    <div class="actions">
+      <button mat-button (click)="navigateToHome()">Volver a Home</button>
+    </div>
+
+    <!-- Resumen de Parámetros -->
+    <mat-card class="section-card">
+      <mat-card-header>
+        <mat-card-title>Resumen de Parámetros</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="param-grid">
+          <div><strong>Nombre:</strong> {{bond.nombre}}</div>
+          <div><strong>Valor Nominal:</strong> {{bond.valorNominal | currency}}</div>
+          <div><strong>Tasa Nominal:</strong> {{bond.tasa | percent:'1.2-2'}}</div>
+          <div><strong>Plazo:</strong> {{bond.plazo | number:'1.1-1'}} años</div>
+          <div><strong>Frecuencia de Pagos:</strong> {{bond.frecuenciaPagos || 1}}/año</div>
+          <div><strong>Riesgo:</strong> 
+            <span [class.high-risk]="results.riesgo === 'ALTO'"
+                  [class.medium-risk]="results.riesgo === 'MEDIO'">
+              {{results.riesgo}}
+            </span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
 
     <!-- Flujo de Caja -->
     <mat-card class="section-card">
-        <mat-card-header>
-            <mat-card-title>Flujo de Caja</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <ngx-charts-bar-vertical
-                    [results]="flujoCajaChart"
-                    [xAxis]="true"
-                    [yAxis]="true"
-                    [scheme]="colorScheme">
-            </ngx-charts-bar-vertical>
+      <mat-card-header>
+        <mat-card-title>Flujo de Caja</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ngx-charts-bar-vertical
+          [results]="flujoCajaChart"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          xAxisLabel="Períodos"
+          yAxisLabel="Monto"
+          [scheme]="colorScheme">
+        </ngx-charts-bar-vertical>
 
-            <table mat-table [dataSource]="results?.flujoCaja" class="mat-elevation-z2">
-                <ng-container matColumnDef="year">
-                    <th mat-header-cell *matHeaderCellDef>Año</th>
-                    <td mat-cell *matCellDef="let item">{{item.year}}</td>
-                </ng-container>
+        <table mat-table [dataSource]="results.flujoCaja" class="mat-elevation-z2">
+          <ng-container matColumnDef="periodo">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let item">{{item.periodo}}</td>
+          </ng-container>
 
-                <ng-container matColumnDef="interes">
-                    <th mat-header-cell *matHeaderCellDef>Interés</th>
-                    <td mat-cell *matCellDef="let item">{{item.value | currency}}</td>
-                </ng-container>
+          <ng-container matColumnDef="year">
+            <th mat-header-cell *matHeaderCellDef>Año</th>
+            <td mat-cell *matCellDef="let item">{{item.year}}</td>
+          </ng-container>
 
-                <ng-container matColumnDef="capital">
-                    <th mat-header-cell *matHeaderCellDef>Capital</th>
-                    <td mat-cell *matCellDef="let item">{{item.final | currency}}</td>
-                </ng-container>
+          <ng-container matColumnDef="interes">
+            <th mat-header-cell *matHeaderCellDef>Interés</th>
+            <td mat-cell *matCellDef="let item">{{item.value | currency}}</td>
+          </ng-container>
 
-                <ng-container matColumnDef="total">
-                    <th mat-header-cell *matHeaderCellDef>Total</th>
-                    <td mat-cell *matCellDef="let item">{{(item.value + item.final) | currency}}</td>
-                </ng-container>
+          <ng-container matColumnDef="capital">
+            <th mat-header-cell *matHeaderCellDef>Capital</th>
+            <td mat-cell *matCellDef="let item">{{item.final | currency}}</td>
+          </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumnsFlujo"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumnsFlujo;"></tr>
-            </table>
-        </mat-card-content>
+          <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef>Total</th>
+            <td mat-cell *matCellDef="let item">{{(item.value + item.final) | currency}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsFlujo"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsFlujo;"></tr>
+        </table>
+      </mat-card-content>
     </mat-card>
 
-    <!-- Métricas -->
+    <!-- Métricas Técnicas -->
     <mat-card class="section-card">
-        <mat-card-header>
-            <mat-card-title>Métricas de Riesgo</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <mat-accordion>
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>Duración</mat-panel-title>
-                        <mat-panel-description>{{results?.duracion}} años</mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <p>Mide la sensibilidad del precio del bono a cambios en las tasas de interés.</p>
-                </mat-expansion-panel>
+      <mat-card-header>
+        <mat-card-title>Métricas de Riesgo</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Duración</mat-panel-title>
+              <mat-panel-description>{{results.duracion}} años</mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>Mide la sensibilidad del precio del bono a cambios en las tasas de interés.</p>
+          </mat-expansion-panel>
 
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>Convexidad</mat-panel-title>
-                        <mat-panel-description>{{results?.convexidad}}</mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <p>Mide la curvatura en la relación precio-rendimiento del bono.</p>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </mat-card-content>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Duración Modificada</mat-panel-title>
+              <mat-panel-description>{{results.duracionModificada}}</mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>Mide el cambio porcentual en el precio ante cambios en el rendimiento.</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Convexidad</mat-panel-title>
+              <mat-panel-description>{{results.convexidad}}</mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>Mide la curvatura en la relación precio-rendimiento del bono.</p>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-card-content>
     </mat-card>
+  </div>
+
+  <div *ngIf="bonds.length === 0" class="no-bonds-message">
+    <mat-icon>info</mat-icon>
+    <p>No hay bonos disponibles para mostrar. Cree un bono primero.</p>
+  </div>
 </div>

@@ -7,7 +7,7 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class LoginService {
-  private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = 'https://json-squema.onrender.com/users';
 
   constructor(private http: HttpClient) {
   }

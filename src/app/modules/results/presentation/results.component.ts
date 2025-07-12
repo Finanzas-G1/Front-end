@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { BondsService } from '../../bonds/presentation/services/bonds.service';
-import { ResultsService } from './results.service';
+import { ResultsService, Bond, BondResults } from './results.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
-import { NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
-import { Color } from '@swimlane/ngx-charts';
+import { NgxChartsModule, Color, ScaleType } from '@swimlane/ngx-charts';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButton } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-results',
@@ -17,78 +20,87 @@ import { MatButton } from '@angular/material/button';
   styleUrls: ['./results.component.css'],
   standalone: true,
   imports: [
+    CommonModule,
     MatCardModule,
     MatTableModule,
     NgxChartsModule,
     MatTooltipModule,
     MatExpansionModule,
     MatIconModule,
-    MatButton
+    MatButtonModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    FormsModule
   ]
 })
 export class ResultsComponent implements OnInit {
-  bond: any = null;  // Aquí guardamos el bono
-  results: any = null;  // Aquí guardamos los resultados calculados
+  bonds: Bond[] = [];
+  selectedBondId: string | null = null;
+  bond: Bond | null = null;
+  results: BondResults | null = null;
   flujoCajaChart: any[] = [];
+  
   colorScheme: Color = {
     name: 'custom',
     selectable: true,
     group: ScaleType.Ordinal,
-    domain: ['#FF8C00']
+    domain: ['#FF8C00', '#FFA500', '#FF6A00']
   };
 
-  // Columnas para tablas
-  displayedColumnsFlujo = ['year', 'interes', 'capital', 'total'];
-  displayedColumnsMetrics = ['metric', 'value', 'description'];
+  displayedColumnsFlujo = ['periodo', 'year', 'interes', 'capital', 'total'];
 
   constructor(
-    private route: ActivatedRoute,
     private bondsService: BondsService,
     private resultsService: ResultsService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    const usuarioId = localStorage.getItem('usuarioId'); // Obtener usuarioId desde localStorage
-    if (usuarioId) {
-      this.loadBondData(usuarioId); // Cargar los bonos según el usuarioId
+    const usuarioId = localStorage.getItem('usuarioId');
+    if (!usuarioId) {
+      this.router.navigate(['/login']);
+      return;
     }
+    this.loadBonds(usuarioId);
   }
 
-  loadBondData(usuarioId: string): void {
-    // Obtener los bonos filtrados por usuarioId
+  loadBonds(usuarioId: string): void {
     this.bondsService.getBondsByUser(usuarioId).subscribe({
       next: (bonds) => {
-        if (bonds && bonds.length > 0) {
-          this.bond = bonds[0]; // Seleccionamos el primer bono del usuario (puedes ajustar esto según lo necesites)
-          this.results = this.resultsService.calculateMetrics(this.bond);  // Calcular las métricas del bono
-          this.prepareChartData();
-        } else {
-          console.log('No se encontraron bonos para este usuario');
+        this.bonds = bonds;
+        if (bonds.length > 0) {
+          this.selectedBondId = bonds[0].id || null;
+          this.loadBondData(this.selectedBondId);
         }
       },
-      error: (err) => console.error('Error loading bond data:', err)
+      error: (err) => console.error('Error loading bonds:', err)
     });
+  }
+
+  loadBondData(bondId: string | null): void {
+    if (!bondId) return;
+    
+    const selectedBond = this.bonds.find(b => b.id === bondId);
+    if (!selectedBond) return;
+    
+    this.bond = selectedBond;
+    this.results = this.resultsService.calculateMetrics(selectedBond);
+    this.prepareChartData();
+  }
+
+  onBondSelectionChange(): void {
+    this.loadBondData(this.selectedBondId);
   }
 
   prepareChartData(): void {
     if (this.results?.flujoCaja) {
-      this.flujoCajaChart = this.results.flujoCaja.map((item: any) => ({
-        name: `Año ${item.year}`,
+      this.flujoCajaChart = this.results.flujoCaja.map(item => ({
+        name: `Período ${item.periodo}`,
         value: item.value + (item.final || 0)
       }));
     }
   }
 
-  formatCurrency(value: number): string {
-    return '$' + value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-  }
-
-  formatPercent(value: number): string {
-    return (value * 100).toFixed(2) + '%';
-  }
-
-  // Método para navegar a la página de Home
   navigateToHome(): void {
     this.router.navigate(['/inicio']);
   }
