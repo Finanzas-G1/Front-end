@@ -80,11 +80,11 @@
       <mat-card-content>
         <div class="param-grid">
           <div><strong>Nombre:</strong> {{bond.nombre}}</div>
-          <div><strong>Valor Nominal:</strong> {{bond.valorNominal | currency}}</div>
-          <div><strong>Tasa Nominal:</strong> {{bond.tasa | percent:'1.2-2'}}</div>
-          <div><strong>Plazo:</strong> {{bond.plazo | number:'1.1-1'}} años</div>
+          <div><strong>Valor Nominal:</strong> {{ getCurrencySymbol() }}{{ bond.valorNominal | number:'1.2-2' }}</div>
+          <div><strong>Tasa Nominal:</strong> {{ bond.tasa | percent:'1.2-2' }}</div>
+          <div><strong>Plazo:</strong> {{ bond.plazo | number:'1.1-1' }} años</div>
           <div><strong>Frecuencia de Pagos:</strong> {{bond.frecuenciaPagos || 1}}/año</div>
-          <div><strong>Riesgo:</strong> 
+          <div><strong>Riesgo:</strong>
             <span [class.high-risk]="results.riesgo === 'ALTO'"
                   [class.medium-risk]="results.riesgo === 'MEDIO'">
               {{results.riesgo}}
